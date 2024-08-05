@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price My Phone GH</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jfif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            overflow: hidden;
+            margin-top: 50px;
+            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background for readability */
+            padding: 20px;
+            border-radius: 8px;
+        }
+        #main {
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        input[type=text], select {
+            width: calc(100% - 24px); /* Adjust for padding */
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result p {
+            background: #e2e2e2;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .result img {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+        }
+        .brand-logos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Responsive grid layout */
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .brand-logos img {
+            width: 100%;
+            height: auto;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .autocomplete-suggestions {
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            background: #fff;
+            z-index: 1000;
+            width: calc(100% - 24px); /* Match the input field width */
+        }
+        .autocomplete-suggestion {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .autocomplete-suggestion:hover {
+            background-color: #f0f0f0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="main">
+        <h2>Price My Phone GH</h2>
+        <form id="predict-form">
+            <label for="phone_name">Phone Name</label>
+            <input type="text" id="phone_name" name="phone_name" placeholder="Enter phone name...">
+            <div id="suggestions" class="autocomplete-suggestions"></div>
+            <input type="submit" value="Predict">
+        </form>
+        <div id="result" class="result"></div>
+        <div class="brand-logos">
+            <!-- Add brand logos here -->
+            <img src="logos/samsung.png" alt="Samsung" onclick="setBrand('Samsung')">
+            <img src="logos/apple.png" alt="Apple" onclick="setBrand('Apple')">
+            <img src="logos/huawei.png" alt="Huawei" onclick="setBrand('Huawei')">
+            <img src="logos/google.png" alt="Google" onclick="setBrand('Google')">
+            <img src="logos/lg.png" alt="LG" onclick="setBrand('LG')">
+            <img src="logos/tecno.png" alt="Tecno" onclick="setBrand('Tecno')">
+            <img src="logos/infinix.png" alt="Infinix" onclick="setBrand('Infinix')">
+            <img src="logos/itel.png" alt="Itel" onclick="setBrand('Itel')">
+            <img src="logos/nokia.png" alt="Nokia" onclick="setBrand('Nokia')">
+            <img src="logos/oppo.png" alt="Oppo" onclick="setBrand('Oppo')">
+            <img src="logos/xiaomi.png" alt="Xiaomi" onclick="setBrand('Xiaomi')">
+            <img src="logos/oneplus.png" alt="OnePlus" onclick="setBrand('OnePlus')">
+            <img src="logos/motorola.png" alt="Motorola" onclick="setBrand('Motorola')">
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('phone_name').addEventListener('input', function () {
+    var query = this.value;
+    if (query.length > 0) {
+        fetch('/autocomplete?query=' + query)
+            .then(response => response.json())
+            .then(data => {
+                var suggestions = data.suggestions;
+                var suggestionsContainer = document.getElementById('suggestions');
+                suggestionsContainer.innerHTML = '';
+                suggestions.forEach(function (suggestion) {
+                    var suggestionElement = document.createElement('div');
+                    suggestionElement.className = 'autocomplete-suggestion';
+                    suggestionElement.innerText = suggestion;
+                    suggestionElement.onclick = function () {
+                        document.getElementById('phone_name').value = suggestion;
+                        suggestionsContainer.innerHTML = '';
+                    };
+                    suggestionsContainer.appendChild(suggestionElement);
+                });
+            });
+    } else {
+        document.getElementById('suggestions').innerHTML = '';
+    }
+});
+
+document.getElementById('predict-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const phoneName = document.getElementById('phone_name').value.trim();
+    const resultDiv = document.getElementById('result');
+    if (!phoneName) {
+        resultDiv.innerHTML = `<p class="error">Please enter a phone name.</p>`;
+        return;
+    }
+    resultDiv.innerHTML = '<p>Loading...</p>';
+    fetch('/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ phone_name: phoneName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            resultDiv.innerHTML = `<p class="error">${data.error}</p>`;
+        } else {
+            resultDiv.innerHTML = `
+                <p><strong>Predicted Price:</strong> ${data.predicted_price}</p>
+                <p><strong>Confidence Interval:</strong> ${data.confidence_interval.join(' - ')}</p>
+                <p><strong>Similar Phones:</strong> ${data.similar_phones.join(', ')}</p>
+                <p><strong>Storage:</strong> ${data.specifications.storage} GB</p>
+                <p><strong>RAM:</strong> ${data.specifications.ram} GB</p>
+            `;
+            if (data.image_url) {
+                resultDiv.innerHTML += `<img src="${data.image_url}" alt="Generated Image">`;
+            }
+        }
+    })
+    .catch(error => {
+        resultDiv.innerHTML = `<p class="error">An error occurred: ${error.message}</p>`;
+    });
+});
+
+function setBrand(brand) {
+    document.getElementById('phone_name').value = brand + '_';
+}
+</script>
+
+</body>
+</html>
