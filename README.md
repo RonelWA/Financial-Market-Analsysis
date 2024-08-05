@@ -1,7 +1,3 @@
-Sure, here is an updated README with a section discussing the future directions for the project and its potential implications on the mobile market in Ghana:
-
----
-
 # Price My Phone GH
 
 **Price My Phone GH** is a Flask-based web application that predicts the price of a smartphone based on its model and generates an image of the phone using OpenAI's DALL-E model.
