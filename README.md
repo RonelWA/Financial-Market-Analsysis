@@ -10,7 +10,7 @@ Price My Phone GH is a Flask-based web application that predicts the price of a 
 - [Model Details](#model-details)
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ## Installation
 
