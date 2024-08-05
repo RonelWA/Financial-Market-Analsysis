@@ -23,25 +23,25 @@
 
 ## File Structure
 
-Financial-Market-Analysis/
-├── app.py                        # Main Flask application
-├── requirements.txt              # List of Python dependencies
-├── templates/
-│   ├── home.html                 # Home page of the application
-│   ├── index.html                # Prediction page
-├── static/
-│   ├── logos/                    # Brand logos used in the web app
-│   ├── background.jfif           # Background image
-├── models/
-│   ├── stacking_regressor.pkl       # Trained model
-│   ├── phone_features.pkl           # Pickle file containing phone features
-│   ├── label_encoder.pkl            # Label encoder for phone brand models
-│   ├── features_used_for_training.pkl # List of features used for training
-├── data/
-│   ├── Mobile-Phones.csv          # CSV file containing phone data
-├── notebooks/
-│   ├── PriceMyPhone.ipynb         # Jupyter notebook for model training and evaluation
-└── README.md                      # This README file
+Financial-Market-Analysis
+app.py                        # Main Flask application
+requirements.txt              # List of Python dependencies
+templates/
+home.html                 # Home page of the application
+index.html                # Prediction page
+static/
+logos/                    # Brand logos used in the web app
+background.jfif           # Background image
+odels/
+stacking_regressor.pkl       # Trained model
+phone_features.pkl           # Pickle file containing phone features
+label_encoder.pkl            # Label encoder for phone brand models
+features_used_for_training.pkl # List of features used for training
+data/
+ Mobile-Phones.csv          # CSV file containing phone data
+notebooks/
+PriceMyPhone.ipynb         # Jupyter notebook for model training and evaluation
+README.md                      # This README file
 
 ## Prerequisites
 
@@ -188,25 +188,26 @@ As we continue to develop and enhance Price My Phone GH, there are several excit
 
 By pursuing these future directions, Price My Phone GH aims to revolutionize the mobile phone market in Ghana, providing valuable insights and empowering users with AI-driven solutions.
 
-API Endpoints
-/autocomplete
+## API Endpoints
+-autocomplete
 Method: GET
+
 Description: Provides autocomplete suggestions for phone names.
 Parameters: query (string) - The query string for autocomplete.
 Example: /autocomplete?query=iPhone
-/predict
+
+-/predict
 Method: POST
+
 Description: Predicts the price of a phone and provides similar phones.
 Parameters: JSON body containing phone_name (string) - The name of the phone.
 Example:
-json
-Copy code
+
 {
   "phone_name": "iPhone 12"
 }
-Response:
-json
-Copy code
+
+## Response:
 {
   "predicted_price": "GH₵ 6603.26",
   "confidence_interval": ["GH₵ 6503.26", "GH₵ 6703.26"],
