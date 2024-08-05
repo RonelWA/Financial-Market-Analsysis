@@ -1,19 +1,52 @@
 # Price My Phone GH
 
-**Price My Phone GH** is a Flask-based web application that predicts the price of a smartphone based on its Stacking Regressor model and generates an image of the phone using OpenAI's DALL-E model.
+**Price My Phone GH** is a Flask-based web application that predicts the price of a smartphone based using Stacking Regressor model and generates an image of the phone using OpenAI's DALL-E model.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [File Structure](#file-structure)
+- [Model Details](#model-details)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
+- 
 ## Features
 
-- Predicts the price of a smartphone based on its model.
-- Displays similar phones based on the features of the input phone.
-- Generates an image of the phone 
-- Provides autocomplete suggestions for phone names.
+-Predicts the price of a smartphone based on its features.
+-Provides a confidence interval for the predicted price.
+-Suggests similar phones based on their RAM and storage features.
+-Generates an image of the phone with its specifications using OpenAI's DALL-E model.
+-Autocomplete feature for phone names
+
+## File Structure
+
+Financial-Market-Analysis/
+├── app.py                        # Main Flask application
+├── requirements.txt              # List of Python dependencies
+├── templates/
+│   ├── home.html                 # Home page of the application
+│   ├── index.html                # Prediction page
+├── static/
+│   ├── logos/                    # Brand logos used in the web app
+│   ├── background.jfif           # Background image
+├── models/
+│   ├── stacking_regressor.pkl       # Trained model
+│   ├── phone_features.pkl           # Pickle file containing phone features
+│   ├── label_encoder.pkl            # Label encoder for phone brand models
+│   ├── features_used_for_training.pkl # List of features used for training
+├── data/
+│   ├── Mobile-Phones.csv          # CSV file containing phone data
+├── notebooks/
+│   ├── PriceMyPhone.ipynb         # Jupyter notebook for model training and evaluation
+└── README.md                      # This README file
 
 ## Prerequisites
 
 - Python 3.7 or higher
 - Flask
-- Joblib
 - OpenAI API key
 
 ## Installation
@@ -123,7 +156,7 @@ The application logs its activities to `app.log`. Check this file for detailed l
 ### Model Persistence
 
 - **Save the Model and Features**:
-    - Save the trained Gradient Boosting model and the features used during training using `joblib`.
+    - Save the trained model and the features used during training using `joblib`.
 
 ## AI in Financial Market Analysis in Ghana
 
@@ -155,38 +188,162 @@ As we continue to develop and enhance Price My Phone GH, there are several excit
 
 By pursuing these future directions, Price My Phone GH aims to revolutionize the mobile phone market in Ghana, providing valuable insights and empowering users with AI-driven solutions.
 
-## Example Usage in Jupyter Notebook
+API Endpoints
+/autocomplete
+Method: GET
+Description: Provides autocomplete suggestions for phone names.
+Parameters: query (string) - The query string for autocomplete.
+Example: /autocomplete?query=iPhone
+/predict
+Method: POST
+Description: Predicts the price of a phone and provides similar phones.
+Parameters: JSON body containing phone_name (string) - The name of the phone.
+Example:
+json
+Copy code
+{
+  "phone_name": "iPhone 12"
+}
+Response:
+json
+Copy code
+{
+  "predicted_price": "GH₵ 6603.26",
+  "confidence_interval": ["GH₵ 6503.26", "GH₵ 6703.26"],
+  "similar_phones": ["Samsung Galaxy S20", "Huawei P40", "Google Pixel 5"],
+  "image_url": "http://image.url/generated_image.png",
+  "specifications": {
+    "storage": "128 GB",
+    "ram": "6 GB"
+  }
+}
 
-Here is an example of how the model prediction and image generation can be integrated in a Jupyter notebook:
+Here's a comprehensive README for your GitHub repository, detailing the functionality and usage of the "Price My Phone GH" project.
 
-```python
-import requests
-import json
+README.md
+markdown
+Copy code
+# Price My Phone GH
 
-# URL of the Flask server
-url = 'http://127.0.0.1:5000/predict'
+Price My Phone GH is a Flask-based web application that predicts the price of a smartphone based on its Stacking Regressor model and generates an image of the phone using OpenAI's DALL-E model. The application also suggests similar phones based on their features.
 
-# Phone name to predict
-phone_name = 'Apple_iPhone_11'
+## Table of Contents
 
-# Request payload
-payload = {'phone_name': phone_name}
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [File Structure](#file-structure)
+- [Model Details](#model-details)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
 
-# Send the POST request
-response = requests.post(url, json=payload)
+## Installation
 
-# Get the response
-data = response.json()
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/RonelWA/Financial-Market-Analysis.git
+   cd Financial-Market-Analysis
+Create a virtual environment and activate it:
 
-# Display the results
-print(f"Predicted Price: {data['predicted_price']}")
-print(f"Confidence Interval: {data['confidence_interval']}")
-print(f"Similar Phones: {data['similar_phones']}")
+bash
+Copy code
+python -m venv venv
+source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+Install the required dependencies:
 
-# Display the generated image
-from IPython.display import Image
-Image(url=data['image_url'])
-```
+bash
+Copy code
+pip install -r requirements.txt
+Set your OpenAI API key:
+
+bash
+Copy code
+export OPENAI_API_KEY='your_openai_api_key'
+Usage
+Start the Flask application:
+
+bash
+Copy code
+flask run
+Open your web browser and go to http://127.0.0.1:5000.
+
+Enter the name of the phone you want to predict in the input field and click "Predict".
+
+Features
+Predicts the price of a smartphone based on its features.
+Provides a confidence interval for the predicted price.
+Suggests similar phones based on their RAM and storage features.
+Generates an image of the phone with its specifications using OpenAI's DALL-E model.
+Autocomplete feature for phone names.
+File Structure
+php
+Copy code
+Financial-Market-Analysis/
+├── app.py                        # Main Flask application
+├── requirements.txt              # List of Python dependencies
+├── templates/
+│   ├── home.html                 # Home page of the application
+│   ├── index.html                # Prediction page
+├── static/
+│   ├── logos/                    # Brand logos used in the web app
+│   ├── background.jfif           # Background image
+├── models/
+│   ├── gradient_boosting_model.pkl  # Trained Gradient Boosting model
+│   ├── phone_features.pkl           # Pickle file containing phone features
+│   ├── label_encoder.pkl            # Label encoder for phone brand models
+│   ├── features_used_for_training.pkl # List of features used for training
+├── data/
+│   ├── Mobile-Phones.csv          # CSV file containing phone data
+├── notebooks/
+│   ├── PriceMyPhone.ipynb         # Jupyter notebook for model training and evaluation
+└── README.md                      # This README file
+Model Details
+The application uses a stacking regressor model to predict the price of a phone. The model is trained using various features such as RAM, storage, display size, and resolution. The stacking model combines multiple regression models to improve prediction accuracy.
+
+Training the Model
+The model is trained using the data in Mobile-Phones.csv. The training process is documented in the Jupyter notebook PriceMyPhone.ipynb.
+
+Features Used
+RAM (in GB)
+Storage (in GB)
+Display size (in inches)
+Resolution (in pixels)
+API Endpoints
+/autocomplete
+Method: GET
+Description: Provides autocomplete suggestions for phone names.
+Parameters: query (string) - The query string for autocomplete.
+Example: /autocomplete?query=iPhone
+/predict
+Method: POST
+Description: Predicts the price of a phone and provides similar phones.
+Parameters: JSON body containing phone_name (string) - The name of the phone.
+Example:
+json
+Copy code
+{
+  "phone_name": "iPhone 12"
+}
+Response:
+json
+Copy code
+{
+  "predicted_price": "GH₵ 6603.26",
+  "confidence_interval": ["GH₵ 6503.26", "GH₵ 6703.26"],
+  "similar_phones": ["Samsung Galaxy S20", "Huawei P40", "Google Pixel 5"],
+  "image_url": "http://image.url/generated_image.png",
+  "specifications": {
+    "storage": "128 GB",
+    "ram": "6 GB"
+  }
+}
+## Contributing
+
+Contributions are welcome! Please fork the repository and create a pull request with your changes.
+
+Make sure to update the `OpenAI API Key` placeholder with your actual key and adjust any paths or details specific to your project structure. This README provides an overview, installation instructions, usage details, and more to help others understand and contribute to your project.
+
 
 ## Conclusion
 
