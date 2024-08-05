@@ -1,12 +1,12 @@
 # Price My Phone GH
 
-**Price My Phone GH** is a Flask-based web application that predicts the price of a smartphone based on its model and generates an image of the phone using OpenAI's DALL-E model.
+**Price My Phone GH** is a Flask-based web application that predicts the price of a smartphone based on its Stacking Regressor model and generates an image of the phone using OpenAI's DALL-E model.
 
 ## Features
 
 - Predicts the price of a smartphone based on its model.
 - Displays similar phones based on the features of the input phone.
-- Generates an image of the phone with a white background and its specifications.
+- Generates an image of the phone 
 - Provides autocomplete suggestions for phone names.
 
 ## Prerequisites
